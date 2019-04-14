@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="LocateRoots">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/artifacts/LocateRoots_jar/LocateRoots.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
