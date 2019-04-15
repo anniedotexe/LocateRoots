@@ -22,7 +22,7 @@ public class LocateRoots {
     private static final double delta = 0.01; // delta for modified secant
     private static final double ERROR = 0.01; // 1% desired approx error
     private static final double DIVERGING_ERROR = 20; // 2000% error for checking divergence
-    private static PrintStream output;
+    private static PrintStream output; // output iteration and error to file
 
     /**
      * Write iteration number and the approximate error to output file
@@ -208,7 +208,7 @@ public class LocateRoots {
                 // check if it is an actual root
                 if (isRoot(fc)) {
                     System.out.printf("BISECTION - The root %.3f has been found in between %.0f and %.0f for " +
-                            "function #%d in %d iterations.\n", c, initialA, initialB, functionNumber, n);
+                            "function #%d in %d iterations.\n", c, initialA, initialB, functionNumber, n+1);
                     output.println("root = " + c);
                 }
                 else {
@@ -271,7 +271,7 @@ public class LocateRoots {
                 // check if it is an actual root
                 if (isRoot(fx)) {
                     System.out.printf("NEWTON - The root %.3f has been found for function #%d starting at x = %.0f in " +
-                            "%d iterations.\n", x, functionNumber, initialX, n);
+                            "%d iterations.\n", x, functionNumber, initialX, n+1);
                     output.println("root = " + x);
                 }
                 else {
@@ -335,7 +335,7 @@ public class LocateRoots {
                 // check if it is an actual root
                 if (isRoot(fx)) {
                     System.out.printf("SECANT - The root %.3f has been found for function #%d starting at x = %.0f in " +
-                            "%d iterations.\n", x, functionNumber, initialX, n);
+                            "%d iterations.\n", x, functionNumber, initialX, n+1);
                     output.println("root = " + x);
                 }
                 else {
@@ -401,7 +401,7 @@ public class LocateRoots {
                 // check if it is an actual root
                 if (isRoot(fc)) { // a root
                     System.out.printf("FALSE-POSITION - The root %.3f has been found in between %.0f and %.0f for " +
-                            "function #%d in %d iterations.\n", c, initialA, initialB, functionNumber, n);
+                            "function #%d in %d iterations.\n", c, initialA, initialB, functionNumber, n+1);
                     output.println("root = " + c);
                 } else { // not a root
                     System.out.printf("FALSE-POSITION - There is no root in between %.0f and %.0f for " +
@@ -467,7 +467,7 @@ public class LocateRoots {
                 // check if it is an actual root
                 if (isRoot(fx)) {
                     System.out.printf("MODIFIED SECANT - The root %.3f has been found for function #%d starting at x = %.0f in " +
-                            "%d iterations.\n", x, functionNumber, initialX, n);
+                            "%d iterations.\n", x, functionNumber, initialX, n+1);
                     output.println("root = " + x);
                 }
                 else {
