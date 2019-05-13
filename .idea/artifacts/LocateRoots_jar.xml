@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="LocateRoots:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/LocateRoots_jar</output-path>
+    <root id="archive" name="LocateRoots.jar">
+      <element id="module-output" name="LocateRoots" />
+    </root>
+  </artifact>
+</component>

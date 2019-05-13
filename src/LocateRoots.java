@@ -19,7 +19,7 @@ import java.io.*;
 public class LocateRoots {
 
     private static final int MAX = 100; // max iterations
-    private static final double delta = 0.01; // delta for modified secant
+    private static final double DELTA = 0.01; // DELTA for modified secant
     private static final double ERROR = 0.01; // 1% desired approx error
     private static final double DIVERGING_ERROR = 20; // 2000% error for checking divergence
     private static PrintStream output; // output iteration and error to file
@@ -85,10 +85,9 @@ public class LocateRoots {
                         n, previousX, x, fPreviousX, fx, fPrimeX, error);
     }
 
-    private static void printModSecant(int n, double previous, double x, double fPreviousX, double fx,
-                                       double fxAndDelta, double fPrimeX, double currentError) {
-        System.out.printf("   %d \t|   %.3f\t|   %.3f\t|   %.3f\t|   %.3f\t|   %.3f\t|   %.3f\t|   %.3f\n",
-                n, previous, x, fPreviousX, fx, fxAndDelta, fPrimeX, currentError);
+    private static void printModSecant(int n, double x, double deltaX, double fx, double fxAndDeltaX, double fPrimeX, double currentError) {
+        System.out.printf("   %d \t|   %.3f\t|   %.3f\t|   %.3f\t|   %.3f\t|   %.3f\t|   %.3f\n",
+                n, x, deltaX, fx, fxAndDeltaX, fPrimeX, currentError);
     }
 
     /**
@@ -425,7 +424,7 @@ public class LocateRoots {
     }
 
     /**
-     * Modified Secant Method, with delta = 0.01
+     * Modified Secant Method, with DELTA = 0.01
      * @param functionNumber function 1 or 2
      * @param previous previous value
      * @param x current value
@@ -434,27 +433,27 @@ public class LocateRoots {
         double initialX = x;
         double next = 0;
         double fx = 0;
-        double fPreviousX = 0;
+        double deltaX = 0;
         double fPrimeX = 0;
-        double fxAndDelta = 0;
+        double fxAndDeltaX = 0;
         double currentError = 1;
         int n = 0; // iterations
 
-        System.out.println("\n   n \t|    xn-1 \t|     xn \t|   f(xn-1)\t|   f(xn)\t|  f(x+delta*x)\t|   f'(xn)\t|   Error ");
+        System.out.println("\n   n \t|    xn \t|  delta*xn\t|   f(xn)\t|  f(x+delta*x)\t|   f'(xn)\t|   Error ");
         System.out.println("-------------------------------------------------------------------------------------------------------------------");
 
         while (!maxIterations(n)) {
             fx = getFX(functionNumber, x);
-            fPreviousX = getFX(functionNumber, previous);
+            deltaX = x * DELTA;
             fPrimeX = getFPrimeX(functionNumber, x);
-            fxAndDelta = getFX(functionNumber, (x + (delta * x)));
+            fxAndDeltaX = getFX(functionNumber, (x + (DELTA * x)));
             currentError = getError(x, previous);
 
-            // xn+1 = xn - (f(xn) * ((delta * xn)) / (f(xn + (delta * xn)) - f(xn)))
-            next = x - (fx*(delta * x))/(fxAndDelta - fx);
+            // xn+1 = xn - (f(xn) * ((DELTA * xn)) / (f(xn + (DELTA * xn)) - f(xn)))
+            next = x - (fx*(DELTA * x))/(fxAndDeltaX - fx);
 
             // print to console and output file
-            printModSecant(n, previous, x, fPreviousX, fx, fxAndDelta, fPrimeX, currentError);
+            printModSecant(n, x, deltaX, fx, fxAndDeltaX, fPrimeX, currentError);
             writeToFile(n, currentError);
 
             if (currentError > DIVERGING_ERROR) {
